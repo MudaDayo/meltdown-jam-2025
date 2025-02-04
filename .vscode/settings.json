@@ -56,5 +56,5 @@
         "temp/": true,
         "Temp/": true
     },
-    "dotnet.defaultSolution": "meltdown.sln"
+    "dotnet.defaultSolution": "meltdown-jam-2025.sln"
 }
