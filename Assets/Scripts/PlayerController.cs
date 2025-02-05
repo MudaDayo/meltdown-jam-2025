@@ -46,12 +46,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 movement = _desiredMovementDirection;
+        //Vector3 movement = _desiredMovementDirection;
+        /*
         if (IsGrounded())
             movement *= _movementSpeed;
         else
             movement *= _airSpeed;
+        
         _rb.linearVelocity = new Vector3(movement.x, _rb.linearVelocity.y, _rb.linearVelocity.z);
+        */
+        Vector3 nextPosition = transform.position + _desiredMovementDirection * _movementSpeed * Time.fixedDeltaTime;
+        _rb.MovePosition(nextPosition);
     }
 
     void HandleMovementInput()
