@@ -17,7 +17,8 @@ public class DestroyablePlatform : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        Debug.Log(collision);
+        if (collision.gameObject.CompareTag("Enemy"))
         {
             Invoke("Kill", _timeToDie);
         }
