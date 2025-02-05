@@ -343,7 +343,7 @@ Transform:
   m_GameObject: {fileID: 900670809}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 130.9, y: -12.8, z: 0}
+  m_LocalPosition: {x: 80.8, y: -12.8, z: 0}
   m_LocalScale: {x: 1, y: 50, z: 2.85}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -690,8 +690,8 @@ Transform:
   m_GameObject: {fileID: 1451134480}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 57.300003, y: -36.6, z: 0}
-  m_LocalScale: {x: 150, y: 1, z: 2.85}
+  m_LocalPosition: {x: 31.8, y: -36.6, z: 0}
+  m_LocalScale: {x: 100, y: 1, z: 2.85}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1398,6 +1398,10 @@ PrefabInstance:
     - target: {fileID: 3709035189428318611, guid: 902f07929f0c50b4ba83c0e3de3411ae, type: 3}
       propertyPath: m_Name
       value: Sphere
+      objectReference: {fileID: 0}
+    - target: {fileID: 5893741043913128516, guid: 902f07929f0c50b4ba83c0e3de3411ae, type: 3}
+      propertyPath: _smoothSpeed
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 6622891134493008860, guid: 902f07929f0c50b4ba83c0e3de3411ae, type: 3}
       propertyPath: m_LocalPosition.x
