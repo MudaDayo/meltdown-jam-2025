@@ -77,4 +77,13 @@ public class PlayerController : MonoBehaviour
     {
         return Physics.Raycast(transform.position, -Vector3.up, 1.1f);
     }
+
+    void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log(collision);
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            _rb.AddExplosionForce(10000, collision.transform.position, 10);
+        }
+    }
 }
