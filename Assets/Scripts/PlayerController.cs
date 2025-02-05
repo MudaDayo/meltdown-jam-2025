@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce;
     private InputAction _movementAction;
     private InputAction _jumpAction;
+    private InputAction _interactAction;
     private Rigidbody _rb;
     private Vector3 _desiredMovementDirection = Vector3.zero;
     void Start()
@@ -18,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
         _movementAction = _inputAsset.FindActionMap("Player").FindAction("Move");
         _jumpAction = _inputAsset.FindActionMap("Player").FindAction("Jump");
+        _interactAction = _inputAsset.FindActionMap("Player").FindAction("Interact");
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -64,6 +67,13 @@ public class PlayerController : MonoBehaviour
             _rb.AddForce(Vector3.up * _jumpForce);
             //Jump();
         }
+
+        if (_interactAction == null) return;
+        if (_interactAction.WasPressedThisFrame())
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+            
     }
 
     void Jump()
