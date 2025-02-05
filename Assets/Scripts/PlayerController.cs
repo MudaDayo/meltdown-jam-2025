@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
@@ -10,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce;
     private InputAction _movementAction;
     private InputAction _jumpAction;
+    private InputAction _interactAction;
     private Rigidbody _rb;
     private Vector3 _desiredMovementDirection = Vector3.zero;
     void Start()
@@ -18,6 +20,7 @@ public class PlayerController : MonoBehaviour
 
         _movementAction = _inputAsset.FindActionMap("Player").FindAction("Move");
         _jumpAction = _inputAsset.FindActionMap("Player").FindAction("Jump");
+        _interactAction = _inputAsset.FindActionMap("Player").FindAction("Interact");
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -43,12 +46,17 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 movement = _desiredMovementDirection;
+        //Vector3 movement = _desiredMovementDirection;
+        /*
         if (IsGrounded())
             movement *= _movementSpeed;
         else
             movement *= _airSpeed;
+        
         _rb.linearVelocity = new Vector3(movement.x, _rb.linearVelocity.y, _rb.linearVelocity.z);
+        */
+        Vector3 nextPosition = transform.position + _desiredMovementDirection * _movementSpeed * Time.fixedDeltaTime;
+        _rb.MovePosition(nextPosition);
     }
 
     void HandleMovementInput()
@@ -64,6 +72,13 @@ public class PlayerController : MonoBehaviour
             _rb.AddForce(Vector3.up * _jumpForce);
             //Jump();
         }
+
+        if (_interactAction == null) return;
+        if (_interactAction.WasPressedThisFrame())
+        {
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+            
     }
 
     void Jump()
