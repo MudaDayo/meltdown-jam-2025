@@ -6,6 +6,7 @@ public class PlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField] private InputActionAsset _inputAsset;
     [SerializeField] private float _movementSpeed;
+    [SerializeField] private float _airSpeed;
     [SerializeField] private float _jumpForce;
     private InputAction _movementAction;
     private InputAction _jumpAction;
@@ -42,7 +43,11 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector3 movement = _desiredMovementDirection * _movementSpeed;
+        Vector3 movement = _desiredMovementDirection;
+        if (IsGrounded())
+            movement *= _movementSpeed;
+        else
+            movement *= _airSpeed;
         _rb.linearVelocity = new Vector3(movement.x, _rb.linearVelocity.y, _rb.linearVelocity.z);
     }
 
