@@ -1,0 +1,6 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/HUD.uss?fileID=7433441132597879392&amp;guid=ccce9aafae2e70f4d9cbd079792b2b08&amp;type=3#HUD" />
+    <ui:VisualElement style="flex-grow: 1;">
+        <ui:Label text="Time" name="Timer" style="font-size: 40px; -unity-text-align: upper-center;" />
+    </ui:VisualElement>
+</ui:UXML>
