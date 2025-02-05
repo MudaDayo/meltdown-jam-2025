@@ -37,14 +37,13 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        HandleMovementInput();
     }
 
     private void FixedUpdate()
     {
         Vector3 movement = _desiredMovementDirection * _movementSpeed;
         _rb.linearVelocity = new Vector3(movement.x, _rb.linearVelocity.y, _rb.linearVelocity.z);
-        HandleMovementInput();
     }
 
     void HandleMovementInput()
@@ -55,9 +54,10 @@ public class PlayerController : MonoBehaviour
         //Vector3 movement = movementInput * Vector3.right;
         _desiredMovementDirection = movementInput;
 
-        if (_jumpAction.IsPressed() && IsGrounded())
+        if (_jumpAction.WasPressedThisFrame() && _jumpAction.IsPressed() && IsGrounded())
         {
-            Jump();
+            _rb.AddForce(Vector3.up * _jumpForce);
+            //Jump();
         }
     }
 
