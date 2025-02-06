@@ -3,10 +3,8 @@ using UnityEngine;
 public class PipeBomb : MonoBehaviour
 {
     [SerializeField] private float _fuseTime;
-    [SerializeField] private float _explosionForce;
     [SerializeField] private float _explosionDuration = 0.1f;
-    [SerializeField] private Transform _explosionTransform;
-    [SerializeField] private Collider _explosionCollider;
+    [SerializeField] private GameObject _explosionPrefab;
     void Start()
     {
         Invoke("Explode", _fuseTime);
@@ -14,25 +12,12 @@ public class PipeBomb : MonoBehaviour
 
     void Explode()
     {
-        _explosionCollider.enabled = true;
-        _explosionTransform.gameObject.SetActive(true);
+        Instantiate(_explosionPrefab, transform.position, Quaternion.identity);
         Invoke("Kill", _explosionDuration);
     }
 
     void Kill()
     {
         Destroy(gameObject);
-    }
-
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            // Vector3 explosionDirection = transform.InverseTransformPoint(other.transform.position).normalized;
-            // Debug.Log(explosionDirection);
-            // other.GetComponent<Rigidbody>().AddForce(explosionDirection * _explosionForce);
-
-            other.GetComponent<Rigidbody>().AddExplosionForce(_explosionForce, transform.position, 0f, 0f, ForceMode.VelocityChange);
-        }
     }
 }
