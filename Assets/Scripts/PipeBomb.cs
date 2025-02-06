@@ -32,7 +32,7 @@ public class PipeBomb : MonoBehaviour
             // Debug.Log(explosionDirection);
             // other.GetComponent<Rigidbody>().AddForce(explosionDirection * _explosionForce);
 
-            other.GetComponent<Rigidbody>().AddExplosionForce(_explosionForce, transform.position, 5f);
+            other.GetComponent<Rigidbody>().AddExplosionForce(_explosionForce, transform.position, 0f, 0f, ForceMode.VelocityChange);
         }
     }
 }

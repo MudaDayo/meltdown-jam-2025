@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 130fae9ae6d47b145b57c8829f341641, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _fuseTime: 0.75
-  _explosionForce: 30000
+  _fuseTime: 1
+  _explosionForce: 15
   _explosionDuration: 0.1
   _explosionTransform: {fileID: 6233006264182410979}
   _explosionCollider: {fileID: 3262313604981382374}
@@ -184,7 +184,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 20, y: 20, z: 20}
+  m_LocalScale: {x: 30, y: 30, z: 30}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 4575762179756417703}
