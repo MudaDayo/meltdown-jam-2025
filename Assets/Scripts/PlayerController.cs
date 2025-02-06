@@ -10,17 +10,25 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _airSpeed;
     [SerializeField] private float _jumpForce;
     private InputAction _movementAction;
+    private InputAction _lookAction;
     private InputAction _jumpAction;
     private InputAction _interactAction;
+    private InputAction _attackAction;
     private Rigidbody _rb;
     private Vector3 _desiredMovementDirection = Vector3.zero;
+
+    [SerializeField] private GameObject _bombPrefab;
+    [SerializeField] private float _launchForce;
+
     void Start()
     {
         if (_inputAsset == null) return;
 
         _movementAction = _inputAsset.FindActionMap("Player").FindAction("Move");
+        _lookAction = _inputAsset.FindActionMap("Player").FindAction("Look");
         _jumpAction = _inputAsset.FindActionMap("Player").FindAction("Jump");
         _interactAction = _inputAsset.FindActionMap("Player").FindAction("Interact");
+        _attackAction = _inputAsset.FindActionMap("Player").FindAction("Attack");
         _rb = GetComponent<Rigidbody>();
     }
 
@@ -42,21 +50,31 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleMovementInput();
+        HandleAttackInput();
     }
 
     private void FixedUpdate()
     {
-        //Vector3 movement = _desiredMovementDirection;
-        /*
+        Vector3 movement = _desiredMovementDirection.normalized;
+        
         if (IsGrounded())
             movement *= _movementSpeed;
         else
             movement *= _airSpeed;
+
+        if ((movement.x == 0 || (movement.x * _rb.linearVelocity.x) < 0) && IsGrounded())
+        {
+            float deceleration = Mathf.Lerp(_rb.linearVelocity.x, movement.x, _movementSpeed * Time.deltaTime);
+            _rb.linearVelocity = new Vector3(deceleration, _rb.linearVelocity.y, _rb.linearVelocity.z);
+        }
+        else if (_rb.linearVelocity.x + movement.x * Time.deltaTime > _movementSpeed || _rb.linearVelocity.x + movement.x * Time.deltaTime < -_movementSpeed)
+        { }
+        else
+            _rb.linearVelocity += movement * Time.deltaTime;
+        //_rb.linearVelocity = new Vector3(movement.x, _rb.linearVelocity.y, _rb.linearVelocity.z);
         
-        _rb.linearVelocity = new Vector3(movement.x, _rb.linearVelocity.y, _rb.linearVelocity.z);
-        */
-        Vector3 nextPosition = transform.position + _desiredMovementDirection * _movementSpeed * Time.fixedDeltaTime;
-        _rb.MovePosition(nextPosition);
+        //Vector3 nextPosition = transform.position + _desiredMovementDirection * _movementSpeed * Time.fixedDeltaTime;
+        //_rb.MovePosition(nextPosition);
     }
 
     void HandleMovementInput()
@@ -65,7 +83,7 @@ public class PlayerController : MonoBehaviour
 
         Vector2 movementInput = _movementAction.ReadValue<Vector2>();
         //Vector3 movement = movementInput * Vector3.right;
-        _desiredMovementDirection = movementInput;
+        _desiredMovementDirection = movementInput * Vector3.right;
 
         if (_jumpAction.WasPressedThisFrame() && _jumpAction.IsPressed() && IsGrounded())
         {
@@ -73,12 +91,40 @@ public class PlayerController : MonoBehaviour
             //Jump();
         }
 
-        if (_interactAction == null) return;
+            
+    }
+
+    void HandleAttackInput()
+    {
+        if (_interactAction == null || _attackAction == null) return;
+
+        if (_attackAction.WasPressedThisFrame() && _bombPrefab != null)
+        {
+            Vector2 lookDirection = _lookAction.ReadValue<Vector2>();
+            Vector3 launchDirection = new Vector3(lookDirection.x, lookDirection.y, 0).normalized;
+            Debug.Log("One Boom for this guy");
+            Debug.Log(launchDirection);
+            if (launchDirection == Vector3.zero)
+            {
+                Debug.Log("Using mouse instead");
+                Vector3 mousePosition = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+                launchDirection = transform.TransformPoint(mousePosition);
+                launchDirection.z = 0;
+                launchDirection.Normalize();
+                Debug.Log(launchDirection);
+            }
+            var pipeBomb = Instantiate(_bombPrefab, transform.position, Quaternion.identity);
+            pipeBomb.GetComponent<Rigidbody>().AddForce(launchDirection * _launchForce);
+            pipeBomb.GetComponent<Rigidbody>().AddTorque(new Vector3(0, 0, Random.Range(-10,10)));
+            //Vector3 mousePosition = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
+            //_rb.AddForce(transform.TransformPoint(mousePosition).normalized * _explosionForce);
+            //_rb.AddExplosionForce(_explosionForce, mousePosition, _explosionRadius);
+        }
+
         if (_interactAction.WasPressedThisFrame())
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-            
     }
 
     void Jump()
