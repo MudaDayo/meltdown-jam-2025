@@ -28,9 +28,11 @@ public class PipeBomb : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            Vector3 explosionDirection = transform.InverseTransformPoint(other.transform.position).normalized;
-            Debug.Log(explosionDirection);
-            other.GetComponent<Rigidbody>().AddForce(explosionDirection * _explosionForce);
+            // Vector3 explosionDirection = transform.InverseTransformPoint(other.transform.position).normalized;
+            // Debug.Log(explosionDirection);
+            // other.GetComponent<Rigidbody>().AddForce(explosionDirection * _explosionForce);
+
+            other.GetComponent<Rigidbody>().AddExplosionForce(_explosionForce, transform.position, 5f);
         }
     }
 }
