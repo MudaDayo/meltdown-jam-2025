@@ -114,7 +114,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log(launchDirection);
             }
             var pipeBomb = Instantiate(_bombPrefab, transform.position, Quaternion.identity);
-            pipeBomb.GetComponent<Rigidbody>().AddForce(launchDirection * _launchForce);
+            pipeBomb.GetComponent<Rigidbody>().AddForce(launchDirection * _launchForce + _rb.linearVelocity);
             pipeBomb.GetComponent<Rigidbody>().AddTorque(new Vector3(0, 0, Random.Range(-10,10)));
             //Vector3 mousePosition = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
             //_rb.AddForce(transform.TransformPoint(mousePosition).normalized * _explosionForce);

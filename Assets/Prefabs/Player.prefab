@@ -152,8 +152,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _inputAsset: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  _movementSpeed: 14
-  _airSpeed: 14
+  _movementSpeed: 12
+  _airSpeed: 8
   _jumpForce: 9000
   _bombPrefab: {fileID: 4958316002675177270, guid: a99d5a9c8bb0c394685ef7dc6e748b7b, type: 3}
-  _launchForce: 500
+  _launchForce: 600
