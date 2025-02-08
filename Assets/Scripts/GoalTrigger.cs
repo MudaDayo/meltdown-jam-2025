@@ -3,6 +3,9 @@ using UnityEngine;
 public class GoalTrigger : MonoBehaviour
 {
     [SerializeField] private GameObject _triggerable;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _newClip;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,6 +15,10 @@ public class GoalTrigger : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && !_triggerable.activeSelf)
+        {
             _triggerable.SetActive(true);
+            _audioSource.clip = _newClip;
+            _audioSource.Play();
+        }
     }
 }
