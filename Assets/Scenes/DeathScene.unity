@@ -259,7 +259,6 @@ GameObject:
   - component: {fileID: 440191513}
   - component: {fileID: 440191516}
   - component: {fileID: 440191515}
-  - component: {fileID: 440191514}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -282,28 +281,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 904487994}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &440191514
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 440191512}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 865236de38bc1c04fb2ff9d69f7503e8, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!212 &440191515
 SpriteRenderer:
   m_ObjectHideFlags: 0
