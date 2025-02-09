@@ -10,7 +10,7 @@ public class GameOverMenu : MonoBehaviour
     protected virtual void OnEnable()
     {
         _ui = GetComponent<UIDocument>().rootVisualElement;
-        _restartButton = _ui.Q("StartButton") as Button;
+        _restartButton = _ui.Q("RestartButton") as Button;
         if (_restartButton != null)
             _restartButton.RegisterCallback<ClickEvent>(OnRestartButtonClick);
     }
