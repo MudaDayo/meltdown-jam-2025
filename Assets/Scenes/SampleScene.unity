@@ -1028,7 +1028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7934588107976410200, guid: 01e451af4befd8c45bff445db6a222df, type: 3}
       propertyPath: _movementSpeed
-      value: 350
+      value: 400
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
