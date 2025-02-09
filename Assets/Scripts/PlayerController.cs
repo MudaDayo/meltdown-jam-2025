@@ -139,6 +139,13 @@ public class PlayerController : MonoBehaviour
         //Vector3 movement = movementInput * Vector3.right;
         _desiredMovementDirection = movementInput * Vector3.right;
 
+        if(IsGrounded() && movementInput.x != 0 && !_audioSource.isPlaying){
+            _audioSource.clip = _walkClip;
+            _audioSource.Play();
+        }else if(movementInput.x == 0 && _audioSource.clip == _walkClip){
+            _audioSource.Stop();
+        }
+
         if (_visuals != null)
         {
             if (movementInput.x > 0)
@@ -208,10 +215,10 @@ public class PlayerController : MonoBehaviour
         {
             _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, _jumpForce * Time.deltaTime, _rb.linearVelocity.z);
         }
-    }
-    bool IsGrounded()
+    }  bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, -Vector3.up, 1.1f);
+        LayerMask layerMask = LayerMask.GetMask("Default", "Breakable");
+        return Physics.Raycast(transform.position, -Vector3.up, 1.1f, layerMask);
     }
 
     void OnCollisionEnter(Collision collision)

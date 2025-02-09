@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 8437144218346420121}
   - component: {fileID: 7934588107976410200}
   - component: {fileID: 6484012884869468328}
+  - component: {fileID: 4849301145006892648}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -128,6 +129,7 @@ MonoBehaviour:
   timeToChangeDirection: 2
   travelTime: 0
   travelTimer: 5
+  _playerRecorder: {fileID: 4849301145006892648}
   changingDirection: 0
   traveling: 1
 --- !u!54 &6484012884869468328
@@ -157,3 +159,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 120
   m_CollisionDetection: 0
+--- !u!114 &4849301145006892648
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3690844026236448466}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8c778d241c7706e4caf6aa484f39bedf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _maxPositions: 300
+  _playerTransform: {fileID: 0}
