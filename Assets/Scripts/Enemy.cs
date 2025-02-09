@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,6 +8,8 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Rigidbody rb;
     [SerializeField]
     private float timer, timeToChangeDirection, travelTime, travelTimer;
+
+    [SerializeField] private PlayerRecorder _playerRecorder;
 
     public bool changingDirection = false;
     public bool traveling = true;
@@ -18,6 +21,7 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
+        /*
         if(traveling){
         timer += Time.deltaTime;
         if(timer > timeToChangeDirection)
@@ -38,7 +42,16 @@ public class Enemy : MonoBehaviour
                 traveling = true;
             }
         } 
-
+        */
+        FollowPlayerRecorder();
         
+    }
+
+    void FollowPlayerRecorder()
+    {
+        if (_playerRecorder.IsReady())
+        {
+            rb.MovePosition(_playerRecorder.Positions.Peek());
+        }
     }
 }
