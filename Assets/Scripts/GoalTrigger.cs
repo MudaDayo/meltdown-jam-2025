@@ -29,6 +29,7 @@ public class GoalTrigger : MonoBehaviour
                 _audioSource.clip = _newClip;
                 _audioSource.Play();
             }
+            gameObject.SetActive(false);
         }
     }
 }
