@@ -68,5 +68,9 @@ public class Enemy : MonoBehaviour
             else
                 rb.position = Vector3.Lerp(_lastPosition, _targetPosition, travelTime);
         }
+        else
+        {
+            rb.linearVelocity = transform.InverseTransformPoint(player.transform.position).normalized * Time.deltaTime * _movementSpeed;
+        }
     }
 }
