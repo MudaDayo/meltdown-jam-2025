@@ -10,6 +10,8 @@ public class Enemy : MonoBehaviour
     private float timer, timeToChangeDirection, travelTime, travelTimer;
 
     [SerializeField] private PlayerRecorder _playerRecorder;
+    private Vector3 _lastPosition;
+    private Vector3 _targetPosition;
 
     public bool changingDirection = false;
     public bool traveling = true;
@@ -19,7 +21,7 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
     }
 
-    void Update()
+    void FixedUpdate()
     {
         /*
         if(traveling){
@@ -43,15 +45,28 @@ public class Enemy : MonoBehaviour
             }
         } 
         */
+        timer += Time.deltaTime;
+        if (timer >= travelTimer)
+        {
+            timer = 0;
+            travelTime = 0;
+            _lastPosition = transform.position;
+            _targetPosition = _playerRecorder.Positions.Peek();
+            _targetPosition.z = _lastPosition.z;
+        }
         FollowPlayerRecorder();
-        
     }
 
     void FollowPlayerRecorder()
     {
+        travelTime += (1f /  travelTimer) * Time.deltaTime;
         if (_playerRecorder.IsReady())
         {
-            rb.MovePosition(_playerRecorder.Positions.Peek());
+            //rb.MovePosition(rb.position + _playerRecorder.Positions.Peek() * timer);
+            if (timer >= travelTimer)
+                rb.position = _targetPosition;
+            else
+                rb.position = Vector3.Lerp(_lastPosition, _targetPosition, travelTime);
         }
     }
 }
