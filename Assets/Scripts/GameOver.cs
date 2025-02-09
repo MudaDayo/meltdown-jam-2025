@@ -11,10 +11,4 @@ public class GameOver : MonoBehaviour
     {
         SceneManager.LoadScene("WinScreen");
     }
-
-    private void Update()
-    {
-        SceneManager.LoadScene("WinScreen");
-        Debug.Log("Loading scene?");
-    }
 }

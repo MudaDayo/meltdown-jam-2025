@@ -1,9 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
     <ui:VisualElement style="flex-grow: 1; flex-basis: auto;">
         <ui:Button text="Start" name="StartButton" style="width: 20%; align-self: center; justify-content: flex-start; height: 6%; top: 60%;" />
-        <ui:Button text="Options" name="OptionsButton" style="width: 20%; align-self: center; justify-content: flex-start; height: 6%; top: 70%;" />
-        <ui:VisualElement name="HighScoreElement" style="flex-grow: 1; width: 10%; height: 20%; align-items: stretch; align-self: flex-end; background-color: rgb(247, 247, 247); justify-content: flex-start; align-content: auto; transform-origin: left top; min-width: auto; min-height: auto; position: absolute; top: 75%; right: 5%;">
-            <ui:Label text="Best Score" style="-unity-text-align: upper-center; font-size: 20px;" />
-        </ui:VisualElement>
+        <ui:Button text="Quit" name="OptionsButton" style="width: 20%; align-self: center; justify-content: flex-start; height: 6%; top: 70%;" />
     </ui:VisualElement>
 </ui:UXML>

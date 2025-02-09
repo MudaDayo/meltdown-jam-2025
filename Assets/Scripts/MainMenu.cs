@@ -34,6 +34,6 @@ public class MainMenu : MonoBehaviour
     }
     void OnOptionsButtonClick(ClickEvent evt)
     {
-
+        Application.Quit();
     }
 }
