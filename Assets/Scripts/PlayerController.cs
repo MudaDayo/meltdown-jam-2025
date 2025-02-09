@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
+using System;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private InputAction _jumpAction;
     private InputAction _interactAction;
     private InputAction _attackAction;
+    [SerializeField] Animator animator;
     private Rigidbody _rb;
     private Vector3 _desiredMovementDirection = Vector3.zero;
 
@@ -51,6 +53,23 @@ public class PlayerController : MonoBehaviour
     {
         HandleMovementInput();
         HandleAttackInput();
+
+        SetAnimatorBools();
+    }
+
+    void SetAnimatorBools(){
+        if(IsGrounded()){
+            animator.SetBool("Jumping", false);
+        } else {
+            animator.SetBool("Jumping", true);
+        }
+
+        Vector2 movementInput = _movementAction.ReadValue<Vector2>();
+        if(movementInput.x != 0){
+            animator.SetBool("running", true);
+        } else {
+            animator.SetBool("running", false);
+        }
     }
 
     private void FixedUpdate()
@@ -85,6 +104,14 @@ public class PlayerController : MonoBehaviour
         //Vector3 movement = movementInput * Vector3.right;
         _desiredMovementDirection = movementInput * Vector3.right;
 
+        if(movementInput.x > 0){
+            if(transform.localScale.x > 0){
+                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+            }
+        } else if(movementInput.x < 0){
+            transform.localScale = new Vector2(Math.Abs(transform.localScale.x), transform.localScale.y);
+        }
+
         if (_jumpAction.WasPressedThisFrame() && _jumpAction.IsPressed() && IsGrounded())
         {
             _rb.AddForce(Vector3.up * _jumpForce);
@@ -115,7 +142,7 @@ public class PlayerController : MonoBehaviour
             }
             var pipeBomb = Instantiate(_bombPrefab, transform.position, Quaternion.identity);
             pipeBomb.GetComponent<Rigidbody>().AddForce(launchDirection * _launchForce + _rb.linearVelocity);
-            pipeBomb.GetComponent<Rigidbody>().AddTorque(new Vector3(0, 0, Random.Range(-10,10)));
+            pipeBomb.GetComponent<Rigidbody>().AddTorque(new Vector3(0, 0, UnityEngine.Random.Range(-10,10)));
             //Vector3 mousePosition = Input.mousePosition - Camera.main.WorldToScreenPoint(transform.position);
             //_rb.AddForce(transform.TransformPoint(mousePosition).normalized * _explosionForce);
             //_rb.AddExplosionForce(_explosionForce, mousePosition, _explosionRadius);
