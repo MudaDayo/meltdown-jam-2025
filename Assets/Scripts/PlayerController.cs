@@ -10,6 +10,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _movementSpeed;
     [SerializeField] private float _airSpeed;
     [SerializeField] private float _jumpForce;
+    [SerializeField] private AudioSource _audioSource;
+    [SerializeField] private AudioClip _jumpClip, _landClip, _walkClip, _throwClip;
     private InputAction _movementAction;
     private InputAction _lookAction;
     private InputAction _jumpAction;
@@ -116,6 +118,8 @@ public class PlayerController : MonoBehaviour
         {
             _rb.AddForce(Vector3.up * _jumpForce);
             //Jump();
+            _audioSource.clip = _jumpClip;
+            _audioSource.Play();
         }
 
             
@@ -127,6 +131,9 @@ public class PlayerController : MonoBehaviour
 
         if (_attackAction.WasPressedThisFrame() && _bombPrefab != null)
         {
+            _audioSource.clip = _throwClip;
+            _audioSource.Play();
+
             Vector2 lookDirection = _lookAction.ReadValue<Vector2>();
             Vector3 launchDirection = new Vector3(lookDirection.x, lookDirection.y, 0).normalized;
             Debug.Log("One Boom for this guy");
@@ -172,6 +179,12 @@ public class PlayerController : MonoBehaviour
         if (collision.gameObject.CompareTag("Enemy"))
         {
             _rb.AddExplosionForce(10000, collision.transform.position, 10);
+        }
+
+        if ((collision.gameObject.CompareTag("ground") || collision.gameObject.CompareTag("Breakable")) && IsGrounded() && collision.transform.position.y < transform.position.y)
+        {
+            _audioSource.clip = _landClip;
+            _audioSource.Play();
         }
     }
 }

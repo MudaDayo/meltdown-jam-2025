@@ -8,6 +8,7 @@ TagManager:
   - PlayerLagBehind
   - Explosion
   - Breakable
+  - ground
   layers:
   - Default
   - TransparentFX
