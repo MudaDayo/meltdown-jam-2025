@@ -1,8 +1,9 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class GoalTrigger : MonoBehaviour
 {
-    [SerializeField] private GameObject _triggerable;
+    [SerializeField] private List<GameObject> _triggerables = null;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _newClip;
 
@@ -14,13 +15,20 @@ public class GoalTrigger : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player") && !_triggerable.activeSelf)
+        if (other.CompareTag("Player") && _triggerables != null)
         {
             other.GetComponent<PlayerController>().panicMode = true;
 
-            _triggerable.SetActive(true);
-            _audioSource.clip = _newClip;
-            _audioSource.Play();
+            foreach (GameObject triggerable in _triggerables)
+            {
+                if (!triggerable.activeSelf)
+                    triggerable.SetActive(true);
+            }
+            if (_newClip != null)
+            {
+                _audioSource.clip = _newClip;
+                _audioSource.Play();
+            }
         }
     }
 }
