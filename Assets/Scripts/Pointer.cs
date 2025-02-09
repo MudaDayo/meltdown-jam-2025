@@ -7,6 +7,7 @@ public class Pointer : MonoBehaviour
 
     private void Update()
     {
+        if (_pointerTarget == null) return;
         transform.right = _pointerTarget.position - transform.position;
     }
 }
