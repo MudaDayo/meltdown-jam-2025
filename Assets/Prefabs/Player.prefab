@@ -216,6 +216,7 @@ MonoBehaviour:
   _jumpClip: {fileID: 8300000, guid: daf32ce19ad2feb48a5b308c92b84261, type: 3}
   _landClip: {fileID: 8300000, guid: 75b19c5cd7a1e5242ba18e8da33cbdf4, type: 3}
   _walkClip: {fileID: 8300000, guid: 622204d84f13a574782ad010f3261901, type: 3}
+  _throwClip: {fileID: 8300000, guid: db5fa69cac468c44da24803fb31c2bdc, type: 3}
   animator: {fileID: 601902981899713749}
   _bombPrefab: {fileID: 4958316002675177270, guid: a99d5a9c8bb0c394685ef7dc6e748b7b, type: 3}
   _launchForce: 600
