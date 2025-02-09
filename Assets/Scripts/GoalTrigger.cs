@@ -16,6 +16,8 @@ public class GoalTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player") && !_triggerable.activeSelf)
         {
+            other.GetComponent<PlayerController>().panicMode = true;
+
             _triggerable.SetActive(true);
             _audioSource.clip = _newClip;
             _audioSource.Play();

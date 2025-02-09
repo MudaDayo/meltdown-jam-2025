@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.InputSystem;
 using System;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _jumpForce;
     [SerializeField] private AudioSource _audioSource;
     [SerializeField] private AudioClip _jumpClip, _landClip, _walkClip, _throwClip;
+    [SerializeField] private Image _portrait;
+    [SerializeField] private Sprite _portraitNormal, _portraitPanic, _portraitThrow, _portraitExplode;
+
+    public bool panicMode = false;
+    private bool _exploded = false;
+
     private InputAction _movementAction;
     private InputAction _lookAction;
     private InputAction _jumpAction;
@@ -65,6 +72,24 @@ public class PlayerController : MonoBehaviour
         }
 
         SetAnimatorBools();
+
+        HandleUIPortrait();
+    }
+
+    void HandleUIPortrait(){
+        if(IsGrounded()){
+            _exploded = false;
+        }
+
+        if(panicMode){
+            _portrait.sprite = _portraitPanic;
+        } else if(_cooldownTimer < _launchCooldown){
+            _portrait.sprite = _portraitThrow;
+        }else if(_exploded){
+            _portrait.sprite = _portraitExplode;}
+         else {
+            _portrait.sprite = _portraitNormal;
+        }
     }
 
     void SetAnimatorBools(){
@@ -203,4 +228,13 @@ public class PlayerController : MonoBehaviour
             _audioSource.Play();
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Explosion"))
+        {
+            _exploded = true;
+        }
+    }
+
 }
