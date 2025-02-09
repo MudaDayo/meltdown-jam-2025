@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private GameObject _bombPrefab;
     [SerializeField] private float _launchForce;
+    [SerializeField] private float _launchCooldown = 0.1f;
+    private float _cooldownTimer;
 
     void Start()
     {
@@ -56,7 +58,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleMovementInput();
-        HandleAttackInput();
+        _cooldownTimer += Time.deltaTime;
+        if (_cooldownTimer >= _launchCooldown)
+        {
+            HandleAttackInput();
+        }
 
         SetAnimatorBools();
     }
@@ -140,6 +146,7 @@ public class PlayerController : MonoBehaviour
 
         if (_attackAction.WasPressedThisFrame() && _bombPrefab != null)
         {
+            _cooldownTimer = 0;
             _audioSource.clip = _throwClip;
             _audioSource.Play();
 
