@@ -20,9 +20,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] Animator animator;
     private Rigidbody _rb;
     private Vector3 _desiredMovementDirection = Vector3.zero;
+    private Transform _visuals;
 
     [SerializeField] private GameObject _bombPrefab;
     [SerializeField] private float _launchForce;
+    [SerializeField] private float _launchCooldown = 0.1f;
+    private float _cooldownTimer;
 
     void Start()
     {
@@ -34,6 +37,7 @@ public class PlayerController : MonoBehaviour
         _interactAction = _inputAsset.FindActionMap("Player").FindAction("Interact");
         _attackAction = _inputAsset.FindActionMap("Player").FindAction("Attack");
         _rb = GetComponent<Rigidbody>();
+        _visuals = transform.Find("animation");
     }
 
     private void OnEnable()
@@ -54,7 +58,11 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         HandleMovementInput();
-        HandleAttackInput();
+        _cooldownTimer += Time.deltaTime;
+        if (_cooldownTimer >= _launchCooldown)
+        {
+            HandleAttackInput();
+        }
 
         SetAnimatorBools();
     }
@@ -106,12 +114,19 @@ public class PlayerController : MonoBehaviour
         //Vector3 movement = movementInput * Vector3.right;
         _desiredMovementDirection = movementInput * Vector3.right;
 
-        if(movementInput.x > 0){
-            if(transform.localScale.x > 0){
-                transform.localScale = new Vector2(transform.localScale.x * -1, transform.localScale.y);
+        if (_visuals != null)
+        {
+            if (movementInput.x > 0)
+            {
+                if (_visuals.localScale.x > 0)
+                {
+                    _visuals.localScale = new Vector2(_visuals.localScale.x * -1, _visuals.localScale.y);
+                }
             }
-        } else if(movementInput.x < 0){
-            transform.localScale = new Vector2(Math.Abs(transform.localScale.x), transform.localScale.y);
+            else if (movementInput.x < 0)
+            {
+                _visuals.localScale = new Vector2(Math.Abs(_visuals.localScale.x), _visuals.localScale.y);
+            }
         }
 
         if (_jumpAction.WasPressedThisFrame() && _jumpAction.IsPressed() && IsGrounded())
@@ -131,6 +146,7 @@ public class PlayerController : MonoBehaviour
 
         if (_attackAction.WasPressedThisFrame() && _bombPrefab != null)
         {
+            _cooldownTimer = 0;
             _audioSource.clip = _throwClip;
             _audioSource.Play();
 
