@@ -1,0 +1,5 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
+    <ui:VisualElement style="flex-grow: 1; background-image: none;">
+        <ui:Button text="Restart" style="top: 60%; width: 20%; align-self: center; height: 8%;" />
+    </ui:VisualElement>
+</ui:UXML>
