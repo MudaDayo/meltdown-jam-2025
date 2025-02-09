@@ -171,5 +171,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c778d241c7706e4caf6aa484f39bedf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _maxPositions: 300
+  _maxPositions: 150
   _playerTransform: {fileID: 0}

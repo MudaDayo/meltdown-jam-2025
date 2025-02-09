@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _launchForce;
     [SerializeField] private float _launchCooldown = 0.1f;
     private float _cooldownTimer;
-
+    private bool _isDead = false;
     void Start()
     {
         if (_inputAsset == null) return;
@@ -64,11 +64,14 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandleMovementInput();
-        _cooldownTimer += Time.deltaTime;
-        if (_cooldownTimer >= _launchCooldown)
+        if (!_isDead)
         {
-            HandleAttackInput();
+            HandleMovementInput();
+            _cooldownTimer += Time.deltaTime;
+            if (_cooldownTimer >= _launchCooldown)
+            {
+                HandleAttackInput();
+            }
         }
 
         SetAnimatorBools();
@@ -215,10 +218,16 @@ public class PlayerController : MonoBehaviour
         {
             _rb.linearVelocity = new Vector3(_rb.linearVelocity.x, _jumpForce * Time.deltaTime, _rb.linearVelocity.z);
         }
-    }  bool IsGrounded()
+    }
+    bool IsGrounded()
     {
         LayerMask layerMask = LayerMask.GetMask("Default", "Breakable");
         return Physics.Raycast(transform.position, -Vector3.up, 1.1f, layerMask);
+    }
+
+    void GameOver()
+    {
+        SceneManager.LoadScene("DeathScene");
     }
 
     void OnCollisionEnter(Collision collision)
@@ -226,7 +235,9 @@ public class PlayerController : MonoBehaviour
         Debug.Log(collision);
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            _rb.AddExplosionForce(10000, collision.transform.position, 10);
+            _rb.AddExplosionForce(50000, collision.transform.position, 100);
+            _isDead = true;
+            Invoke("GameOver", 1f);
         }
 
         if ((collision.gameObject.CompareTag("ground") || collision.gameObject.CompareTag("Breakable")) && IsGrounded() && collision.transform.position.y < transform.position.y)

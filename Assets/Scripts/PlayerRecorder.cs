@@ -10,7 +10,7 @@ public class PlayerRecorder : MonoBehaviour
     public Queue<Vector3> Positions { get { return _positions; } }
 
     // Update is called once per frame
-    void LateUpdate()
+    void FixedUpdate()
     {
         _positions.Enqueue(_playerTransform.position);
         if (_positions.Count > _maxPositions)
