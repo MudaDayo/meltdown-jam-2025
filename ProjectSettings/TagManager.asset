@@ -9,6 +9,7 @@ TagManager:
   - Explosion
   - Breakable
   - ground
+  - Timer
   layers:
   - Default
   - TransparentFX
